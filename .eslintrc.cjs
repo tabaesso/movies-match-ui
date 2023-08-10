@@ -14,5 +14,29 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1,
+        "ignoredNodes": [
+          "TemplateLiteral"
+        ]
+      }
+    ],
+    "semi": [2, "always"],
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      {
+        "multiline": {
+          "delimiter": "semi",
+          "requireLast": true
+        },
+        "singleline": {
+          "delimiter": "semi",
+          "requireLast": false
+        }
+      }
+    ],
   },
 }
