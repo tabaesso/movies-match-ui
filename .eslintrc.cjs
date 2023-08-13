@@ -24,6 +24,7 @@ module.exports = {
         ]
       }
     ],
+    "quotes": [2, "single", { "avoidEscape": true }],
     "semi": [2, "always"],
     "@typescript-eslint/member-delimiter-style": [
       "error",
