@@ -8,10 +8,10 @@ const Home = () => {
   return (
     <Container>
       <Content>
-        <SessionButton onClick={() => navigate('/')}>
+        <SessionButton onClick={() => navigate('/create-session')}>
           <h2>Criar sessão</h2>
         </SessionButton>
-        <SessionButton onClick={() => navigate('/')}>
+        <SessionButton onClick={() => navigate('/join-session')}>
           <h2>Entrar em uma sessão</h2>
         </SessionButton>
       </Content>
