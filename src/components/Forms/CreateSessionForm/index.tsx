@@ -29,7 +29,7 @@ const CreateSessionForm = (props: Props) => {
       <span>Selecione qual o tipo de mídia deseja assistir:</span>
       <JustifyRow>
         <Button
-          selected={values?.type === 'movie'}
+          selected={createdSession?.type === 'movie'}
           flex={1}
           buttonType='primary'
           onClick={() => setCreateSession({ ...createdSession, type: 'movie'})}
@@ -37,7 +37,7 @@ const CreateSessionForm = (props: Props) => {
           Filme
         </Button>
         <Button
-          selected={values?.type === 'series'}
+          selected={createdSession?.type === 'series'}
           flex={1}
           buttonType='primary'
           onClick={() => setCreateSession({ ...createdSession, type: 'series'})}
@@ -46,7 +46,7 @@ const CreateSessionForm = (props: Props) => {
         </Button>
       </JustifyRow>
       <span>Qual o nome da sua sessão?</span>
-      <Input type="text" placeholder='Nome' value={values?.name} onChange={(e) => setCreateSession({ ...createdSession, name: e.target.value })} />
+      <Input type="text" placeholder='Nome' value={createdSession?.name} onChange={(e) => setCreateSession({ ...createdSession, name: e.target.value })} />
       <Button buttonType='primary' onClick={handleSubmit}>Criar sessão</Button>
     </>
   );
