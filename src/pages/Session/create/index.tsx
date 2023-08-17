@@ -1,9 +1,9 @@
 import React from 'react';
-import { Container, Content } from './styles';
 import { Link } from 'react-router-dom';
 import Button from '../../../components/Button';
 import CreateSessionForm, { CreateSessionObject } from '../../../components/Forms/CreateSessionForm';
 import Input from '../../../components/Input';
+import { Container, Content } from '../../../components/styles';
 
 const CreateSession = () => {
   const [createdSession, setCreateSession] = React.useState<CreateSessionObject | undefined>(undefined);
