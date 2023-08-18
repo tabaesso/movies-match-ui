@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../../components/Button';
 import CreateSessionForm, { CreateSessionObject } from '../../../components/Forms/CreateSessionForm';
 import Input from '../../../components/Input';
@@ -7,9 +7,14 @@ import { Container, Content } from '../../../components/styles';
 
 const CreateSession = () => {
   const [createdSession, setCreateSession] = React.useState<CreateSessionObject | undefined>(undefined);
+  const navigate = useNavigate();
 
   const handleSubmit = (values: CreateSessionObject) => {
     setCreateSession(values);
+  };
+
+  const handleAccessSession = () => {
+    navigate(`/session/${createdSession?.name}`);
   };
 
   return (
@@ -29,7 +34,7 @@ const CreateSession = () => {
               <li>Usuário 2</li>
               <li>Usuário 3</li>
             </ul>
-            <Button buttonType='primary'>Começar!</Button>
+            <Button buttonType='primary' onClick={handleAccessSession}>Começar!</Button>
           </>
         )}
       </Content>

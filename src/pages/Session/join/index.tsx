@@ -1,14 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import { Container, Content } from '../../../components/styles';
 
 const JoinSession = () => {
   const [currentSession, setCurrentSession] = React.useState<string | undefined>(undefined);
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
-    alert(currentSession);
+    navigate(`/session/${currentSession}`);
   };
 
   return (
