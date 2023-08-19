@@ -6,7 +6,7 @@ import Button from '../../../../../components/Button';
 import { Mode } from '../../enum/modes';
 
 const MovieVotes = ({ sessionId, onChangeMode }: MovieVotesProps) => {
-
+  console.log(sessionId);
   const movies = [
     {
       id: 1,

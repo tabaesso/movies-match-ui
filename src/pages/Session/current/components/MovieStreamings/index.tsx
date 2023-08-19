@@ -6,6 +6,7 @@ import { NotFound, Title } from './styles';
 import { useNavigate } from 'react-router-dom';
 
 const MovieStreamings = ({ sessionId }: MovieStreamingsProps) => {
+  console.log(sessionId);
   const streamingServices = ['Disney+', 'Netflix', 'Amazon Prime Video', 'Telecine Play', 'Globoplay'];
   const navigate = useNavigate();
 
