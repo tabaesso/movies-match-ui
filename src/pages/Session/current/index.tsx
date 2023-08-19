@@ -1,8 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import TitleGenres from './components/TitleGenres';
 import { Mode } from './enum/modes';
 import { Modes } from './types/modes';
+import TitleGenres from './components/TitleGenres';
+import TitleVotes from './components/TitleVotes';
 
 const CurrentSession = () => {
   const { id } = useParams();
@@ -16,7 +17,7 @@ const CurrentSession = () => {
   
   const modes: Modes = {
     [Mode.TITLE_GENRE_SELECTION]: <TitleGenres sessionId={id} onChangeMode={onChangeMode} />,
-    [Mode.TITLE_SELECTION]: <></>,
+    [Mode.TITLE_SELECTION]: <TitleVotes sessionId={id} onChangeMode={onChangeMode} />,
     [Mode.STREAM_SELECTION]: <></>,
   };
 

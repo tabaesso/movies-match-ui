@@ -11,3 +11,7 @@ export type Modes = {
 export interface TitleGenresProps extends ModesProps {
   sessionId?: string;
 }
+
+export interface TitleVotesProps extends ModesProps {
+  sessionId?: string;
+}
