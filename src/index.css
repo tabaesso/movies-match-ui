@@ -52,8 +52,27 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+
+/* CUSTOM SCROLLBAR */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #646464;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1a1a1a;
+  border-radius: 5px;
+}
+
 @media (prefers-color-scheme: dark) {
-  h1, h2, h3, h4, h5, h6, span, ul {
+  h1, h2, h3, h4, h5, h6, span, ul, label {
     color: #1a1a1a;
   }
 }
