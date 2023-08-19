@@ -8,10 +8,10 @@ export type Modes = {
   [key: string]: JSX.Element;
 }
 
-export interface TitleGenresProps extends ModesProps {
+export interface MovieGenresProps extends ModesProps {
   sessionId?: string;
 }
 
-export interface TitleVotesProps extends ModesProps {
+export interface MovieVotesProps extends ModesProps {
   sessionId?: string;
 }

@@ -1,11 +1,11 @@
 import React from 'react';
-import { TitleVotesProps } from '../../types/modes';
+import { MovieVotesProps } from '../../types/modes';
 import { Container, Content } from '../../../../../components/styles';
 import MovieGrid from '../../../../../components/MovieGrid';
 import Button from '../../../../../components/Button';
 import { Mode } from '../../enum/modes';
 
-const TitleVotes = ({ sessionId, onChangeMode }: TitleVotesProps) => {
+const MovieVotes = ({ sessionId, onChangeMode }: MovieVotesProps) => {
 
   const movies = [
     {
@@ -75,4 +75,4 @@ const TitleVotes = ({ sessionId, onChangeMode }: TitleVotesProps) => {
   );
 };
 
-export default TitleVotes;
+export default MovieVotes;

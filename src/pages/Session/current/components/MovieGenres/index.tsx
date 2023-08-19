@@ -4,10 +4,10 @@ import { Container, Content } from '../../../../../components/styles';
 import CheckboxList from '../../../../../components/CheckboxList';
 import Button from '../../../../../components/Button';
 import { CheckboxContainer } from '../../styles';
-import { TitleGenresProps } from '../../types/modes';
+import { MovieGenresProps } from '../../types/modes';
 import { Mode } from '../../enum/modes';
 
-const TitleGenres = ({ sessionId, onChangeMode }: TitleGenresProps) => {
+const MovieGenres = ({ sessionId, onChangeMode }: MovieGenresProps) => {
   const navigate = useNavigate();
   const [selectedGenres, setSelectedGenres] = React.useState<string[]>([]);
 
@@ -22,7 +22,7 @@ const TitleGenres = ({ sessionId, onChangeMode }: TitleGenresProps) => {
   const onSubmit = React.useCallback(() => {
     // todo: fetch selected genres
     console.log(sessionId);
-    onChangeMode(Mode.TITLE_SELECTION);
+    onChangeMode(Mode.MOVIE_SELECTION);
   }, [onChangeMode, sessionId]);
 
   const genres = [
@@ -60,4 +60,4 @@ const TitleGenres = ({ sessionId, onChangeMode }: TitleGenresProps) => {
   );
 };
 
-export default TitleGenres;
+export default MovieGenres;
