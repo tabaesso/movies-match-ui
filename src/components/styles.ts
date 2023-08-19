@@ -12,6 +12,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   width: 400px;
+  margin: 5px 0;
   padding: 20px;
   background-color: #f0f0f0;
   border-radius: 8px;

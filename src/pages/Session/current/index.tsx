@@ -1,53 +1,29 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Container, Content } from '../../../components/styles';
-import CheckboxList from '../../../components/CheckboxList';
-import Button from '../../../components/Button';
-import { CheckboxContainer } from './styles';
+import { useParams } from 'react-router-dom';
+import TitleGenres from './components/TitleGenres';
+import { Mode } from './enum/modes';
+import { Modes } from './types/modes';
 
 const CurrentSession = () => {
   const { id } = useParams();
-  const genres = [
-    'Ação',
-    'Animação',
-    'Aventura',
-    'Comédia',
-    'Crime',
-    'Documentário',
-    'Drama',
-    'Fantasia',
-    'Ficção Científica',
-    'Musical',
-    'Romance',
-    'Suspense',
-    'Terror',
-    'Western',
-  ];
-  const [selectedGenres, setSelectedGenres] = React.useState<string[]>([]);
+  const [mode, setMode] = React.useState<Mode>(Mode.TITLE_GENRE_SELECTION);
 
-  const handleGenreToggle = (genre: string) => {
-    if (selectedGenres.includes(genre)) {
-      setSelectedGenres(selectedGenres.filter((g) => g !== genre));
-    } else {
-      setSelectedGenres([...selectedGenres, genre]);
-    }
+  const onChangeMode = (newMode: Mode) => {
+    if (newMode === mode) return;
+    
+    setMode(newMode);
+  };
+  
+  const modes: Modes = {
+    [Mode.TITLE_GENRE_SELECTION]: <TitleGenres sessionId={id} onChangeMode={onChangeMode} />,
+    [Mode.TITLE_SELECTION]: <></>,
+    [Mode.STREAM_SELECTION]: <></>,
   };
 
   return (
-    <Container>
-      <Link to='/home'>Voltar</Link>
-      <Content>
-        <h3>Selecione o gênero do que deseja assistir</h3>
-        <CheckboxContainer>
-          <CheckboxList
-            values={genres}
-            selectedValues={selectedGenres}
-            onSelectToggle={handleGenreToggle}
-          />
-        </CheckboxContainer>
-        <Button buttonType='primary'>Combinar filmes</Button>
-      </Content>
-    </Container>
+    <>
+      {modes[mode]}
+    </>
   );
 };
 
