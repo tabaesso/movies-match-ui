@@ -52,6 +52,12 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+@media (prefers-color-scheme: dark) {
+  h1, h2, h3, h4, h5, h6, span, ul {
+    color: #1a1a1a;
+  }
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
