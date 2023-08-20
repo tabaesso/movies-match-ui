@@ -22,7 +22,7 @@ const WaitingApproval = ({ sessionId, onChangeMode }: WaitingApprovalProps) => {
   }, [isLoading, onChangeMode]);
 
   return (
-    <LoadingOverlay message="Aguardando a aprovação do administrador da sessão..."/>
+    <LoadingOverlay message="Aguardando a aprovação do administrador da sessão..." isLoading={isLoading}/>
   );
 };
 

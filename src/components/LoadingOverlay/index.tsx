@@ -27,11 +27,16 @@ const Overlay = styled.div`
   z-index: 1000; /* Garante que o overlay fique acima de outros elementos */
 `;
 
-const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ message, isLoading }) => (
-  <Overlay>
-    <Spinner />
-    <Message>{message}</Message>
-  </Overlay>
+const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ message, isLoading = true }) => (
+  <>
+    {isLoading && (
+      <Overlay>
+        <Spinner />
+        <Message>{message}</Message>
+      </Overlay>
+    )
+    }
+  </>
 );
 
 export default LoadingOverlay;
