@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Image from '../Image';
 
 interface Movie {
   id: number;
@@ -65,12 +66,6 @@ const MovieCard = styled.button<{selected: boolean}>`
   }
 `;
 
-const MovieImage = styled.img`
-  max-width: 100%;
-  height: 150px; /* Altura fixa para as imagens */
-  object-fit: cover; /* Para preencher o espaço mantendo a proporção */
-`;
-
 const MovieTitle = styled.span`
   margin-top: 8px;
   font-size: 12px;
@@ -95,7 +90,7 @@ const MovieGrid: React.FC<MovieGridProps> = ({
             {vote}
           </MovieVote>
           <MovieCard selected={votedMovie === movie.id} onClick={() => onVote(movie.id)}>
-            <MovieImage src={movie.imageUrl} alt={movie.title} />
+            <Image src={movie.imageUrl} alt={movie.title} />
             <MovieTitle>{movie.title}</MovieTitle>
           </MovieCard>
         </MovieItem>

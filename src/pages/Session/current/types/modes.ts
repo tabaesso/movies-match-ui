@@ -16,6 +16,14 @@ export interface MovieVotesProps extends ModesProps {
   sessionId?: string;
 }
 
+export interface MovieSelectedProps extends ModesProps {
+  sessionId?: string;
+}
+
+export interface WaitingApprovalProps extends ModesProps {
+  sessionId?: string;
+}
+
 export interface MovieStreamingsProps {
   sessionId?: string;
 }

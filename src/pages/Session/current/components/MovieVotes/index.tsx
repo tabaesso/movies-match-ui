@@ -54,6 +54,8 @@ const MovieVotes = ({ sessionId, onChangeMode }: MovieVotesProps) => {
     return vote?.votes && vote?.votes > 0 ? `Votos: ${vote?.votes}` : 'Sem votos';
   }, [votes]);
 
+  // TODO: movie selected page will appear just for the session owner, for the others will appear a loading screen
+
   return (
     <Container>
       <Content>
@@ -67,7 +69,7 @@ const MovieVotes = ({ sessionId, onChangeMode }: MovieVotesProps) => {
         <Button buttonType='secondary'>
           Não gostei de nenhum - {neitherOfThem}
         </Button>
-        <Button buttonType='primary' onClick={() => onChangeMode(Mode.STREAM_SELECTION)}>
+        <Button buttonType='primary' onClick={() => onChangeMode(Mode.WAITING_APPROVAL)}>
           Escolhido
         </Button>
       </Content>

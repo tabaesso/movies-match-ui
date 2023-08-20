@@ -5,6 +5,8 @@ import { Modes } from './types/modes';
 import MovieGenres from './components/MovieGenres';
 import MovieVotes from './components/MovieVotes';
 import MovieStreamings from './components/MovieStreamings';
+import MovieSelected from './components/MovieSelected';
+import WaitingApproval from './components/WaitingApproval';
 
 const CurrentSession = () => {
   const { id } = useParams();
@@ -17,8 +19,6 @@ const CurrentSession = () => {
   };
 
   // TODO:
-  // TELA FILME ESCOLHIDO
-  // TELA CADASTRO USUÁRIO
   // TELA AVALIAR FILMES/SÉRIES ASSISTIDOS
   // TELA RANKING DA PLATAFORMA
   // TELA RECUPERAR SENHA
@@ -26,6 +26,8 @@ const CurrentSession = () => {
   const modes: Modes = {
     [Mode.MOVIE_GENRE_SELECTION]: <MovieGenres sessionId={id} onChangeMode={onChangeMode} />,
     [Mode.MOVIE_SELECTION]: <MovieVotes sessionId={id} onChangeMode={onChangeMode} />,
+    [Mode.MOVIE_SELECTED]: <MovieSelected sessionId={id} onChangeMode={onChangeMode} />,
+    [Mode.WAITING_APPROVAL]: <WaitingApproval sessionId={id} onChangeMode={onChangeMode} />,
     [Mode.STREAM_SELECTION]: <MovieStreamings sessionId={id} />,
   };
 
