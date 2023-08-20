@@ -1,26 +1,65 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const PageContainer = styled.div`
   display: flex;
-  height: 100vh;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  align-items: center;
+  min-height: 100vh;
 `;
 
-export const Content = styled.div`
-  display: flex;
-  margin: 10px;
-`;
-
-export const SessionButton = styled.button`
+export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 300px;
-  padding: 20px;
-  background-color: #f0f0f0;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 0 20px;
   align-items: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+`;
+
+export const RankingContainer = styled.div`
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  flex: 1;
+  max-width: 100%;
+  height: 250px;
+  overflow-y: auto;
+  width: 400px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    max-width: calc(50% - 20px);
+  }
+`;
+
+export const RankingTitle = styled.div`
+  display: flex;
+  color: #333;
+  font-weight: bold;
+  flex: 1;
+  font-size: 20px;
+  margin-bottom: 10px;
+  justify-content: center;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  margin-top: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+
+  button {
+    margin: 10px;
+    padding: 10px 20px;
+  }
 `;

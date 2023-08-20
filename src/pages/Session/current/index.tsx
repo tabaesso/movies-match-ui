@@ -17,11 +17,6 @@ const CurrentSession = () => {
     
     setMode(newMode);
   };
-
-  // TODO:
-  // TELA AVALIAR FILMES/SÉRIES ASSISTIDOS
-  // TELA RANKING DA PLATAFORMA
-  // TELA RECUPERAR SENHA
   
   const modes: Modes = {
     [Mode.MOVIE_GENRE_SELECTION]: <MovieGenres sessionId={id} onChangeMode={onChangeMode} />,

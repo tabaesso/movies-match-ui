@@ -17,7 +17,7 @@ const WaitingApproval = ({ sessionId, onChangeMode }: WaitingApprovalProps) => {
 
   React.useEffect(() => {
     if (!isLoading) {
-      onChangeMode(Mode.MOVIE_SELECTED);
+      onChangeMode(Mode.STREAM_SELECTION);
     }
   }, [isLoading, onChangeMode]);
 

@@ -4,18 +4,21 @@ import { Container, Content } from '../../../../../components/styles';
 import Button from '../../../../../components/Button';
 import { NotFound, Title } from './styles';
 import { useNavigate } from 'react-router-dom';
+import { movies } from '../../../../../utils/mock/movies';
 
 const MovieStreamings = ({ sessionId }: MovieStreamingsProps) => {
   console.log(sessionId);
   const streamingServices = ['Disney+', 'Netflix', 'Amazon Prime Video', 'Telecine Play', 'Globoplay'];
   const navigate = useNavigate();
 
+  const movie = movies[4];
+
   return (
     <Container>
       <Content>
         <h4>
           Serviços de streaming que o título&nbsp;
-          <Title>{'O Rei Leão'}</Title>
+          <Title>{movie.title}</Title>
           &nbsp;está disponível:
         </h4>
         {streamingServices.length === 0 ? (

@@ -5,6 +5,7 @@ import Button from '../../../../../components/Button';
 import { Mode } from '../../enum/modes';
 import Image from '../../../../../components/Image';
 import { MovieImageContainer } from './styles';
+import { movies } from '../../../../../utils/mock/movies';
 
 const MovieSelected = ({ sessionId, onChangeMode }: MovieSelectedProps) => {
   console.log(sessionId);
@@ -14,11 +15,7 @@ const MovieSelected = ({ sessionId, onChangeMode }: MovieSelectedProps) => {
     onChangeMode(Mode.MOVIE_GENRE_SELECTION);
   }, [onChangeMode]);
 
-  const movie = {
-    id: 5,
-    title: 'Toy Story 4',
-    imageUrl: 'https://br.web.img3.acsta.net/pictures/19/03/27/21/03/0464387.jpg',
-  };
+  const movie = movies[4];
 
   return (
     <Container>

@@ -7,6 +7,7 @@ import Home from '../pages/Home';
 import CreateSession from '../pages/Session/create';
 import JoinSession from '../pages/Session/join';
 import CurrentSession from '../pages/Session/current';
+import RateMovies from '../pages/RateMovies';
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
   {
     path: '/join-session',
     element: <JoinSession />,
+  },
+  {
+    path: '/rate',
+    element: <RateMovies />
   },
   {
     path: '/session/:id',
