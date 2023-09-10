@@ -1,52 +1,68 @@
 import React from 'react';
-import { JustifyRow } from '../../styles';
 import Button from '../../Button';
 import Input from '../../Input';
+import { Formik } from 'formik';
+import createSessionSchema from '../../../schemas/CreateSessionSchema';
+import { MEDIA_CATEGORIES } from '../../../constants';
+import RadioButtonGroup from '../../RadioButtonGroup';
+import FormikForm from '../../FormikForm';
+import { FormFC } from '../../../interfaces/FormProps';
 
-export interface CreateSessionObject {
-  type?: 'movie' | 'series';
-  name?: string;
+export interface CreateSessionValues {
+  category: string;
+  name: string;
 }
 
-interface Props {
-  values?: CreateSessionObject;
-  onSubmit: (values: CreateSessionObject) => void;
-}
+const CreateSessionForm: FormFC<CreateSessionValues> = (props) => {
+  const { onSubmit } = props;
 
-const CreateSessionForm = (props: Props) => {
-  const { values, onSubmit } = props;
-
-  const [createdSession, setCreateSession] = React.useState<CreateSessionObject | undefined>(values);
-
-  const handleSubmit = () => {
-    if (createdSession?.name && createdSession?.type) {
-      onSubmit(createdSession);
+  const categories = [
+    {
+      value: MEDIA_CATEGORIES.MOVIES,
+      label: 'Filme',
+    },
+    {
+      value: MEDIA_CATEGORIES.SERIES,
+      label: 'Série',
     }
+  ];
+
+  const handleSubmit = (values: CreateSessionValues) => {
+    onSubmit(values);
   };
 
   return (
-    <>
-      <span>Selecione qual o tipo de mídia deseja assistir:</span>
-      <JustifyRow>
-        <Button
-          selected={createdSession?.type === 'movie'}
-          buttonType='primary'
-          onClick={() => setCreateSession({ ...createdSession, type: 'movie'})}
-        >
-          Filme
-        </Button>
-        <Button
-          selected={createdSession?.type === 'series'}
-          buttonType='primary'
-          onClick={() => setCreateSession({ ...createdSession, type: 'series'})}
-        >
-          Série
-        </Button>
-      </JustifyRow>
-      <span>Qual o nome da sua sessão?</span>
-      <Input type="text" placeholder='Nome' value={createdSession?.name} onChange={(e) => setCreateSession({ ...createdSession, name: e.target.value })} />
-      <Button buttonType='primary' onClick={handleSubmit}>Criar sessão</Button>
-    </>
+    <Formik
+      initialValues={{
+        name: '',
+        category: '',
+      }}
+      validationSchema={createSessionSchema}
+      onSubmit={(values, actions) => {
+        handleSubmit(values);
+        actions.resetForm();
+      }}
+    >
+      {({ errors }) => (
+        <FormikForm>
+          <span>Selecione qual o tipo de mídia deseja assistir:</span>
+          <RadioButtonGroup
+            name="category"
+            groups={categories}
+            error={errors.category}
+          />
+          <span>Qual o nome da sua sessão?</span>
+          <Input
+            id="name"
+            name="name"
+            type="text"
+            placeholder='Nome'
+            error={errors.name}
+          />
+          <Button buttonType='primary' type="submit">Criar sessão</Button>
+        </FormikForm>
+      )}
+    </Formik>
   );
 };
 

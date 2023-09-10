@@ -16,6 +16,7 @@ export const Container = styled.button<Button>`
   border-radius: 4px;
   cursor: pointer;
   align-items: center;
+  justify-content: center;
 
   border: ${(props) => props.selected ? '2px solid black' : 'none'};
 `;
