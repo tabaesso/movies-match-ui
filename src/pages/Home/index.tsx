@@ -3,14 +3,17 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '../../components/Button';
 import * as S from './styles';
+import useAuth from '../../hooks/useAuth';
 
 const Home: React.FC = () => {
+  const { signOut } = useAuth();
+
   const navigate = useNavigate();
 
   const handleLogout = React.useCallback(() => {
-    // todo: logout
+    signOut();
     navigate('/');
-  }, [navigate]);
+  }, [navigate, signOut]);
 
   // todo: bring user data
   
