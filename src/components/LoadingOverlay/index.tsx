@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Spinner from '../Spinner';
 
 interface LoadingOverlayProps {
-  message: string;
+  message?: string;
   isLoading?: boolean;
 }
 
@@ -27,7 +27,7 @@ const Overlay = styled.div`
   z-index: 1000; /* Garante que o overlay fique acima de outros elementos */
 `;
 
-const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ message, isLoading = true }) => (
+const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ message = 'Carregando...', isLoading = true }) => (
   <>
     {isLoading && (
       <Overlay>

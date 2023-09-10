@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Container, Content, JustifyRow } from '../../components/styles';
 import useAuth from '../../hooks/useAuth';
 import SignInForm, { SignInValues } from '../../components/Forms/SignInForm';
+import { toast } from 'react-toastify';
 
 const SignIn = () => {
   const { signIn } = useAuth();
@@ -11,6 +12,7 @@ const SignIn = () => {
 
   const onSubmit = useCallback(async (values: SignInValues) => {
     await signIn(values);
+    toast.success('Login realizado com sucesso');
     navigate('/home');
   }, [navigate, signIn]);
 
