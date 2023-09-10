@@ -24,8 +24,8 @@ const RateMovies = () => {
       
       </RateContainer>
       <JustifyRow>
-        <Button flex={1} buttonType='secondary' onClick={() => navigate('/home')}>Voltar</Button>
-        <Button flex={1} buttonType='primary'>Salvar</Button>
+        <Button buttonType='secondary' onClick={() => navigate('/home')}>Voltar</Button>
+        <Button buttonType='primary'>Salvar</Button>
       </JustifyRow>
     </Container>
   );

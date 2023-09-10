@@ -30,7 +30,6 @@ const CreateSessionForm = (props: Props) => {
       <JustifyRow>
         <Button
           selected={createdSession?.type === 'movie'}
-          flex={1}
           buttonType='primary'
           onClick={() => setCreateSession({ ...createdSession, type: 'movie'})}
         >
@@ -38,7 +37,6 @@ const CreateSessionForm = (props: Props) => {
         </Button>
         <Button
           selected={createdSession?.type === 'series'}
-          flex={1}
           buttonType='primary'
           onClick={() => setCreateSession({ ...createdSession, type: 'series'})}
         >

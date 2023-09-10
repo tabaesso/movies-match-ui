@@ -6,7 +6,7 @@ import * as S from './styles';
 import useAuth from '../../hooks/useAuth';
 
 const Home: React.FC = () => {
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
 
   const navigate = useNavigate();
 
@@ -14,12 +14,10 @@ const Home: React.FC = () => {
     signOut();
     navigate('/');
   }, [navigate, signOut]);
-
-  // todo: bring user data
   
   return (
     <S.PageContainer>
-      <h2 style={{ color: '#FFF' }}>O que vamos assistir hoje, fulano?</h2>
+      <h2 style={{ color: '#FFF' }}>O que vamos assistir hoje, {user.name}?</h2>
       <S.ButtonContainer>
         <Button buttonType='primary' onClick={() => navigate('/create-session')}>Criar sessão</Button>
         <Button buttonType='primary' onClick={() => navigate('/join-session')}>Entrar em uma sessão</Button>
@@ -47,7 +45,9 @@ const Home: React.FC = () => {
           </ul>
         </S.RankingContainer>
       </S.ContentWrapper>
-      <Button buttonType='secondary' onClick={handleLogout}>Sair</Button>
+      <div>
+        <Button buttonType='secondary' onClick={handleLogout}>Sair</Button>
+      </div>
     </S.PageContainer>
   );
 };
