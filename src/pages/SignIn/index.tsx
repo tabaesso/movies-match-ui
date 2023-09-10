@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Content, JustifyRow } from '../../components/styles';
 import useAuth from '../../hooks/useAuth';
-import SignInForm, { SignInValues } from './form';
+import SignInForm, { SignInValues } from '../../components/Forms/SignInForm';
 
 const SignIn = () => {
   const { signIn } = useAuth();
