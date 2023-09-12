@@ -8,6 +8,7 @@ import RateMovies from '../pages/RateMovies';
 import CreateSession from '../pages/Session/create';
 import JoinSession from '../pages/Session/join';
 import CurrentSession from '../pages/Session/current';
+import ShareSession from '../pages/Session/share';
 import { ProtectedRoute } from './ProtectedRoute';
 
 export default function AppRoutes() {
@@ -21,6 +22,7 @@ export default function AppRoutes() {
       <Route path="/rate" element={<ProtectedRoute><RateMovies /></ProtectedRoute>} />
       <Route path="/create-session" element={<ProtectedRoute><CreateSession /></ProtectedRoute>} />
       <Route path="/join-session" element={<ProtectedRoute><JoinSession /></ProtectedRoute>} />
+      <Route path="/share-session/:id" element={<ProtectedRoute><ShareSession /></ProtectedRoute>} />
       <Route path="/session/:id" element={<ProtectedRoute><CurrentSession /></ProtectedRoute>} />
     </Routes>
   );

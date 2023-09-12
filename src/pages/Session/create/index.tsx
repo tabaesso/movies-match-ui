@@ -1,41 +1,35 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Button from '../../../components/Button';
 import CreateSessionForm, { CreateSessionValues } from '../../../components/Forms/CreateSessionForm';
 import { Container, Content } from '../../../components/styles';
+import { useMutation } from '@tanstack/react-query';
+import api from '../../../services/api';
+import { toast } from 'react-toastify';
+import LoadingOverlay from '../../../components/LoadingOverlay';
 
 const CreateSession = () => {
-  const [createdSession, setCreateSession] = React.useState<CreateSessionValues | undefined>(undefined);
   const navigate = useNavigate();
 
-  const handleSubmit = (values: CreateSessionValues) => {
-    setCreateSession(values);
-  };
+  const mutation = useMutation({
+    mutationFn: (newSession: CreateSessionValues) => {
+      return api.post('/sessions', newSession);
+    },
+    onSuccess: (data) => {
+      toast.success('Sessão criada com sucesso');
+      navigate(`/share-session/${data.data.id}`);
+    },
+  });
 
-  const handleAccessSession = () => {
-    navigate(`/session/${createdSession?.name}`);
-  };
+  const handleSubmit = React.useCallback((values: CreateSessionValues) => {
+    mutation.mutate(values);
+  }, [mutation]);
 
   return (
     <Container>
+      <LoadingOverlay isLoading={mutation.isLoading} />
       <Link to='/home'>Voltar</Link>
       <Content>
-        {!createdSession && (
-          <CreateSessionForm onSubmit={handleSubmit} />
-        )}
-        {createdSession && (
-          <>
-            <h3>Compartilhe o link com seus amigos!</h3>
-            <input type="text" value="https://www.youtube.com/watch?v=dQw4w9WgXcQ" readOnly />
-            <h4>Entraram na {createdSession?.name}:</h4>
-            <ul>
-              <li>Usuário 1</li>
-              <li>Usuário 2</li>
-              <li>Usuário 3</li>
-            </ul>
-            <Button buttonType='primary' onClick={handleAccessSession}>Começar!</Button>
-          </>
-        )}
+        <CreateSessionForm onSubmit={handleSubmit} />
       </Content>
     </Container>
   );

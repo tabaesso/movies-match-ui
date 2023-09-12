@@ -44,7 +44,7 @@ const SignInForm: FormFC<SignInValues> = (props) => {
           <Input
             id="password"
             name="password"
-            placeholder="Password"
+            placeholder="Senha"
             type="password"
             error={errors.password}
           />
