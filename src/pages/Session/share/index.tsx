@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import api from '../../../services/api';
 import LoadingOverlay from '../../../components/LoadingOverlay';
 import { toast } from 'react-toastify';
+import { Session } from '../../../services/types/Session';
 
 const ShareSession = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,7 +17,7 @@ const ShareSession = () => {
     navigate(`/session/${id}`);
   };
 
-  const { isLoading, error, data, isFetching } = useQuery(['currentSession'], () =>
+  const { isLoading, error, data, isFetching } = useQuery<Session>(['currentSession'], () =>
     api.get(
       `/sessions/${id}`
     ).then((res) => res.data)
@@ -36,7 +37,7 @@ const ShareSession = () => {
         <>
           <h3>Compartilhe o link com seus amigos!</h3>
           <input type="text" value={`${import.meta.env.VITE_BASE_URL}/session/${id}`} readOnly />
-          <h4>Entraram na {data.name}:</h4>
+          <h4>Entraram na {data?.name}:</h4>
           <ul>
             <li>Usuário 1</li>
             <li>Usuário 2</li>

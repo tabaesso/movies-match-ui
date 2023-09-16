@@ -1,3 +1,4 @@
+import { Session } from '../../../../services/types/Session';
 import { Mode } from '../enum/modes';
 
 export interface ModesProps {
@@ -9,21 +10,21 @@ export type Modes = {
 }
 
 export interface MovieGenresProps extends ModesProps {
-  sessionId?: string;
+  session?: Session;
 }
 
 export interface MovieVotesProps extends ModesProps {
-  sessionId?: string;
+  session?: Session;
 }
 
 export interface MovieSelectedProps extends ModesProps {
-  sessionId?: string;
+  session?: Session;
 }
 
 export interface WaitingApprovalProps extends ModesProps {
-  sessionId?: string;
+  session?: Session;
 }
 
 export interface MovieStreamingsProps {
-  sessionId?: string;
+  session?: Session;
 }
