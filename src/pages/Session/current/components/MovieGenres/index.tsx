@@ -6,11 +6,17 @@ import Button from '../../../../../components/Button';
 import { CheckboxContainer } from '../../styles';
 import { MovieGenresProps } from '../../types/modes';
 import { Mode } from '../../enum/modes';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import LoadingOverlay from '../../../../../components/LoadingOverlay';
 import api from '../../../../../services/api';
 import { Genres } from '../../../../../services/types/Genres';
+import _ from 'lodash';
+
+interface SessionGenresValues {
+  genres: number[];
+  sessionId: string;
+}
 
 const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
   const { isLoading, error, data, isFetching } = useQuery<Genres>(['genres'], () =>
@@ -27,6 +33,20 @@ const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
 
   const [selectedGenres, setSelectedGenres] = React.useState<string[]>([]);
 
+  const mutation = useMutation({
+    mutationFn: (sessionGenres: SessionGenresValues) => {
+      return api.patch(`/sessions/${sessionGenres.sessionId}`, {
+        genres: sessionGenres.genres,
+      });
+    },
+    onSuccess: () => {
+      onChangeMode(Mode.MOVIE_SELECTION);
+    },
+    onError: () => {
+      toast.error('Erro ao selecionar gêneros');
+    },
+  });
+
   const handleGenreToggle = React.useCallback((genre: string) => {
     if (selectedGenres.includes(genre)) {
       setSelectedGenres(selectedGenres.filter((g) => g !== genre));
@@ -36,15 +56,23 @@ const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
   }, [selectedGenres]);
 
   const onSubmit = React.useCallback(() => {
-    // todo: send selected genres to backend
-    onChangeMode(Mode.MOVIE_SELECTION);
-  }, [onChangeMode]);
+    if (!session) return;
+
+    const genres = _.compact(selectedGenres.map((genre) => data?.genres.find((g) => g.name === genre)?.id || undefined));
+    const sessionGenres = session?.genres || [];
+    const mergedGenres = _.uniq([...genres, ...sessionGenres]);
+
+    mutation.mutate({
+      genres: mergedGenres,
+      sessionId: session?.id || '',
+    });
+  }, [data?.genres, mutation, selectedGenres, session]);
 
   const movieGenres = React.useMemo(() => data?.genres.map((genre) => genre.name) || [], [data]);
 
   return (
     <Container>
-      <LoadingOverlay isLoading={isLoading || isFetching} />
+      <LoadingOverlay isLoading={isLoading || isFetching || mutation.isLoading} />
       <Link to='/home'>Sair</Link>
       <Content>
         <h3>Selecione o gênero do que deseja assistir</h3>
