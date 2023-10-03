@@ -6,8 +6,8 @@ import Button from '../../../../../components/Button';
 import { Mode } from '../../enum/modes';
 import { movies } from '../../../../../utils/mock/movies';
 
-const MovieVotes = ({ sessionId, onChangeMode }: MovieVotesProps) => {
-  console.log(sessionId);
+const MovieVotes = ({ session, onChangeMode }: MovieVotesProps) => {
+  console.log(session?.id);
 
   const [votedMovie, setMovieVote] = React.useState<number | undefined>(undefined);
 

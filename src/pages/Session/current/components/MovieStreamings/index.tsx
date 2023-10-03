@@ -6,8 +6,8 @@ import { NotFound, Title } from './styles';
 import { useNavigate } from 'react-router-dom';
 import { movies } from '../../../../../utils/mock/movies';
 
-const MovieStreamings = ({ sessionId }: MovieStreamingsProps) => {
-  console.log(sessionId);
+const MovieStreamings = ({ session }: MovieStreamingsProps) => {
+  console.log(session?.id);
   const streamingServices = ['Disney+', 'Netflix', 'Amazon Prime Video', 'Telecine Play', 'Globoplay'];
   const navigate = useNavigate();
 
