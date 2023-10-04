@@ -1,24 +1,18 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Button from '../../../components/Button';
-import Input from '../../../components/Input';
+import { Link } from 'react-router-dom';
 import { Container, Content } from '../../../components/styles';
+import JoinSessionForm, { JoinSessionValues } from '../../../components/Forms/JoinSessionForm';
 
 const JoinSession = () => {
-  const [currentSession, setCurrentSession] = React.useState<string | undefined>(undefined);
-  const navigate = useNavigate();
-
-  const handleSubmit = () => {
-    navigate(`/session/${currentSession}`);
-  };
+  const handleSubmit = React.useCallback((values: JoinSessionValues) => {
+    window.location.href = values.url;
+  }, []);
 
   return (
     <Container>
       <Link to='/home'>Voltar</Link>
       <Content>
-        <span>Insira o link da sessão</span>
-        <Input type="text" placeholder='Link' value={currentSession} onChange={(e) => setCurrentSession(e.target.value)} />
-        <Button buttonType='primary' onClick={handleSubmit}>Acessar</Button>
+        <JoinSessionForm onSubmit={handleSubmit} />
       </Content>
     </Container>
   );
