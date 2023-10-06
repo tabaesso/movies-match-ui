@@ -24,10 +24,8 @@ export default function AppRoutes() {
       <Route path="/create-session" element={<ProtectedRoute><CreateSession /></ProtectedRoute>} />
       <Route path="/join-session" element={<ProtectedRoute><JoinSession /></ProtectedRoute>} />
 
-      <CoordinatorProvider>
-        <Route path="/share-session/:id" element={<ProtectedRoute><ShareSession /></ProtectedRoute>} />
-        <Route path="/session/:id" element={<ProtectedRoute><CurrentSession /></ProtectedRoute>} />
-      </CoordinatorProvider>
+      <Route path="/share-session/:id" element={<CoordinatorProvider><ProtectedRoute><ShareSession /></ProtectedRoute></CoordinatorProvider>} />
+      <Route path="/session/:id" element={<CoordinatorProvider><ProtectedRoute><CurrentSession /></ProtectedRoute></CoordinatorProvider>} />
     </Routes>
   );
 }

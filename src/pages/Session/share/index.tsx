@@ -19,7 +19,6 @@ const ShareSession = () => {
     sendMessage(EventTypes.START_SESSION, { sessionId: id });
   };
 
-  // TODO: Fix provider issue
   const handleAccessSession = () => {
     handleStartSession();
     navigate(`/session/${id}`);
@@ -40,6 +39,7 @@ const ShareSession = () => {
           <h2>Sessão: {session?.name}</h2>
           <h3>Compartilhe o link com seus amigos!</h3>
           <input type="text" value={`${import.meta.env.VITE_BASE_URL}/session/${id}`} readOnly />
+          <br />
           <Button buttonType='primary' onClick={handleAccessSession}>Começar!</Button>
         </>
       </Content>
