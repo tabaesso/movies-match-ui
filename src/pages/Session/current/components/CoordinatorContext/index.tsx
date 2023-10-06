@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import api from '../../../../../services/api';
 import { useParams } from 'react-router-dom';
 import useAuth from '../../../../../hooks/useAuth';
-import useSocket from '../../../../../hooks/useSocket';
+import useSocket, { SocketData } from '../../../../../hooks/useSocket';
 import { EventTypes } from '../../../../../enums/EventTypes';
 
 interface CoordinatorProviderProps {
@@ -15,6 +15,7 @@ interface CoordinatorProviderProps {
   error?: unknown;
   socket: WebSocket | null;
   sendMessage: <T>(event: EventTypes, data: T) => void;
+  receivedData: SocketData | null;
 }
 
 const defaultValue = {
@@ -24,6 +25,7 @@ const defaultValue = {
   error: undefined,
   socket: null,
   sendMessage: () => {},
+  receivedData: null,
 };
 
 const CoordinatorContext = createContext<CoordinatorProviderProps>(defaultValue);
@@ -38,7 +40,7 @@ const CoordinatorProvider: FunctionalComponent = ({ children }) => {
     ).then((res) => res.data)
   );
 
-  const { socket, sendMessage } = useSocket({ sessionId: id || '', userId: user.id });
+  const { socket, sendMessage, receivedData } = useSocket({ sessionId: id || '', userId: user.id });
 
   return (
     <CoordinatorContext.Provider
@@ -49,6 +51,7 @@ const CoordinatorProvider: FunctionalComponent = ({ children }) => {
         error,
         socket,
         sendMessage,
+        receivedData,
       }}
     >
       {children}

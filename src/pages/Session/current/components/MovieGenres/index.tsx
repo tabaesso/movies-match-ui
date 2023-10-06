@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Content } from '../../../../../components/styles';
 import CheckboxList from '../../../../../components/CheckboxList';
@@ -6,22 +6,24 @@ import Button from '../../../../../components/Button';
 import { CheckboxContainer } from '../../styles';
 import { MovieGenresProps } from '../../types/modes';
 import { Mode } from '../../enum/modes';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import LoadingOverlay from '../../../../../components/LoadingOverlay';
 import api from '../../../../../services/api';
 import { Genres } from '../../../../../services/types/Genres';
 import _ from 'lodash';
-
-interface SessionGenresValues {
-  genres: number[];
-  sessionId: string;
-}
+import { CoordinatorContext } from '../CoordinatorContext';
+import { EventTypes } from '../../../../../enums/EventTypes';
 
 const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
+  const [selectedGenres, setSelectedGenres] = React.useState<string[]>([]);
+  const [waitingForOthers, setWaitingForOthers] = React.useState(false);
+
+  const { sendMessage, receivedData } = useContext(CoordinatorContext);
+
   const { isLoading, error, data, isFetching } = useQuery<Genres>(['genres'], () =>
     api.get(
-      `/movies/genres?mediaType=${session?.category}`
+    `/movies/genres?mediaType=${session?.category}`
     ).then((res) => res.data), { enabled: !!session }
   );
 
@@ -31,21 +33,21 @@ const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
     toast.error('Erro ao carregar sessão atual');
   }, [error]);
 
-  const [selectedGenres, setSelectedGenres] = React.useState<string[]>([]);
+  React.useEffect(() => {
+    if (!receivedData) return;
 
-  const mutation = useMutation({
-    mutationFn: (sessionGenres: SessionGenresValues) => {
-      return api.patch(`/sessions/${sessionGenres.sessionId}`, {
-        genres: sessionGenres.genres,
-      });
-    },
-    onSuccess: () => {
-      onChangeMode(Mode.MOVIE_SELECTION);
-    },
-    onError: () => {
-      toast.error('Erro ao selecionar gêneros');
-    },
-  });
+    if (receivedData.event !== EventTypes.SORT_MOVIES_EVENT) return;
+
+    setWaitingForOthers(false);
+    onChangeMode(Mode.MOVIE_SELECTION);
+  }, [onChangeMode, receivedData]);
+
+  const handleSortMovies = React.useCallback((genres: number[]) => {
+    if (!session?.id || !genres.length) return;
+
+    sendMessage(EventTypes.SORT_MOVIES_EVENT, { sessionId: session?.id, genres });
+    setWaitingForOthers(true);
+  }, [sendMessage, session?.id]);
 
   const handleGenreToggle = React.useCallback((genre: string) => {
     if (selectedGenres.includes(genre)) {
@@ -62,17 +64,17 @@ const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
     const sessionGenres = session?.genres || [];
     const mergedGenres = _.uniq([...genres, ...sessionGenres]);
 
-    mutation.mutate({
-      genres: mergedGenres,
-      sessionId: session?.id || '',
-    });
-  }, [data?.genres, mutation, selectedGenres, session]);
+    handleSortMovies(mergedGenres);
+  }, [data?.genres, handleSortMovies, selectedGenres, session]);
 
   const movieGenres = React.useMemo(() => data?.genres.map((genre) => genre.name) || [], [data]);
 
   return (
     <Container>
-      <LoadingOverlay isLoading={isLoading || isFetching || mutation.isLoading} />
+      <LoadingOverlay
+        isLoading={isLoading || isFetching || waitingForOthers}
+        message={waitingForOthers ? 'Aguardando os demais usuários...' : undefined}
+      />
       <Link to='/home'>Sair</Link>
       <Content>
         <h3>Selecione o gênero do que deseja assistir</h3>

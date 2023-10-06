@@ -6,10 +6,16 @@ interface SocketProps {
   userId: string;
 }
 
+export interface SocketData {
+  event: EventTypes;
+  data: unknown;
+}
+
 const useSocket = ({ sessionId, userId }: SocketProps) => {
   const socketURL = `${import.meta.env.VITE_WS_URL}/?sessionId=${sessionId}&userId=${userId}`;
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [receivedData, setReceivedData] = useState<SocketData | null>(null);
 
   useEffect(() => {
     if (!socketURL) {
@@ -29,8 +35,9 @@ const useSocket = ({ sessionId, userId }: SocketProps) => {
     };
 
     socketInstance.onmessage = (event) => {
-      const receivedData = event.data;
-      console.log(event);
+      const { event: eventType, data } = JSON.parse(event.data);
+
+      setReceivedData({ event: eventType, data});
     };
 
     // Fechar a conexão do WebSocket quando o componente desmontar
@@ -39,24 +46,13 @@ const useSocket = ({ sessionId, userId }: SocketProps) => {
     };
   }, []);
 
-  // const listenMessage = function<T>(event: EventTypes, callback: (data: T) => void) {
-  //   if (socket && socket.readyState === WebSocket.OPEN) {
-  //     socket.addEventListener('message', (event) => {
-  //       const data = JSON.parse(event.data);
-  //       if (data.event === event) {
-  //         callback(data);
-  //       }
-  //     });
-  //   }
-  // };
-
   const sendMessage = function<T>(event: EventTypes, data: T) {
     if (socket && socket.readyState === WebSocket.OPEN) {
       socket.send(JSON.stringify({ event, data }));
     }
   };
 
-  return { socket, sendMessage };
+  return { socket, sendMessage, receivedData };
 };
 
 export default useSocket;
