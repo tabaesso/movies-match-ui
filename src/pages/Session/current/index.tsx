@@ -8,7 +8,7 @@ import MovieSelected from './components/MovieSelected';
 import WaitingApproval from './components/WaitingApproval';
 import LoadingOverlay from '../../../components/LoadingOverlay';
 import { toast } from 'react-toastify';
-import { CoordinatorContext, CoordinatorProvider } from './components/CoordinatorContext';
+import { CoordinatorContext } from './components/CoordinatorContext';
 
 const CurrentSession = () => {
   const [mode, setMode] = React.useState<Mode>(Mode.MOVIE_GENRE_SELECTION);
@@ -36,10 +36,10 @@ const CurrentSession = () => {
   };
 
   return (
-    <CoordinatorProvider>
+    <>
       <LoadingOverlay isLoading={isLoading || isFetching} />
       {modes[mode]}
-    </CoordinatorProvider>
+    </>
   );
 };
 

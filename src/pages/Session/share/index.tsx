@@ -1,27 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Button from '../../../components/Button';
 import { Container, Content } from '../../../components/styles';
-import { useQuery } from '@tanstack/react-query';
-import api from '../../../services/api';
 import LoadingOverlay from '../../../components/LoadingOverlay';
 import { toast } from 'react-toastify';
-import { Session } from '../../../services/types/Session';
+import { CoordinatorContext } from '../current/components/CoordinatorContext';
+import { EventTypes } from '../../../enums/EventTypes';
 
 const ShareSession = () => {
   const { id } = useParams<{ id: string }>();
 
+  const { session, error, isLoading, isFetching, sendMessage } = useContext(CoordinatorContext);
+
   const navigate = useNavigate();
 
-  const handleAccessSession = () => {
-    navigate(`/session/${id}`);
+  const handleStartSession = () => {
+    if (!id) return;
+    sendMessage(EventTypes.START_SESSION, { sessionId: id });
   };
 
-  const { isLoading, error, data, isFetching } = useQuery<Session>(['currentSession'], () =>
-    api.get(
-      `/sessions/${id}`
-    ).then((res) => res.data)
-  );
+  // TODO: Fix provider issue
+  const handleAccessSession = () => {
+    handleStartSession();
+    navigate(`/session/${id}`);
+  };
 
   React.useEffect(() => {
     if (!error) return;
@@ -35,14 +37,9 @@ const ShareSession = () => {
       <LoadingOverlay isLoading={isLoading || isFetching} />
       <Content>
         <>
+          <h2>Sessão: {session?.name}</h2>
           <h3>Compartilhe o link com seus amigos!</h3>
           <input type="text" value={`${import.meta.env.VITE_BASE_URL}/session/${id}`} readOnly />
-          <h4>Entraram na {data?.name}:</h4>
-          <ul>
-            <li>Usuário 1</li>
-            <li>Usuário 2</li>
-            <li>Usuário 3</li>
-          </ul>
           <Button buttonType='primary' onClick={handleAccessSession}>Começar!</Button>
         </>
       </Content>

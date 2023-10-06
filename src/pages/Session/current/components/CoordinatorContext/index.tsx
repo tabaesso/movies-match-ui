@@ -4,14 +4,17 @@ import { FunctionalComponent } from '../../../../../interfaces/FunctionalCompone
 import { useQuery } from '@tanstack/react-query';
 import api from '../../../../../services/api';
 import { useParams } from 'react-router-dom';
-// import { io } from 'socket.io-client';
-// import useAuth from '../../../../../hooks/useAuth';
+import useAuth from '../../../../../hooks/useAuth';
+import useSocket from '../../../../../hooks/useSocket';
+import { EventTypes } from '../../../../../enums/EventTypes';
 
 interface CoordinatorProviderProps {
   session?: Session;
   isLoading: boolean;
   isFetching: boolean;
   error?: unknown;
+  socket: WebSocket | null;
+  sendMessage: <T>(event: EventTypes, data: T) => void;
 }
 
 const defaultValue = {
@@ -19,13 +22,15 @@ const defaultValue = {
   isLoading: false,
   isFetching: false,
   error: undefined,
+  socket: null,
+  sendMessage: () => {},
 };
 
 const CoordinatorContext = createContext<CoordinatorProviderProps>(defaultValue);
 
 const CoordinatorProvider: FunctionalComponent = ({ children }) => {
   const { id } = useParams();
-  // const { user } = useAuth();
+  const { user } = useAuth();
 
   const { isLoading, error, data, isFetching } = useQuery<Session>(['currentSession'], () =>
     api.get(
@@ -33,21 +38,18 @@ const CoordinatorProvider: FunctionalComponent = ({ children }) => {
     ).then((res) => res.data)
   );
 
-  // const socketURL = `${import.meta.env.VITE_API_URL}/?sessionId=${id}&userId=${user.id}`;
-
-  // const socket = io(socketURL);
-
-  // socket.on('connect', () => {
-  //   console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-  // });
-  
-  // socket.on('disconnect', () => {
-  //   console.log(socket.id); // undefined
-  // });  
+  const { socket, sendMessage } = useSocket({ sessionId: id || '', userId: user.id });
 
   return (
     <CoordinatorContext.Provider
-      value={{ session: data, isLoading, isFetching, error }}
+      value={{
+        session: data,
+        isLoading,
+        isFetching,
+        error,
+        socket,
+        sendMessage,
+      }}
     >
       {children}
     </CoordinatorContext.Provider>
