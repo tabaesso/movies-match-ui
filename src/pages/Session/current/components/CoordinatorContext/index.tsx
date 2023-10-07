@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import useAuth from '../../../../../hooks/useAuth';
 import useSocket, { SocketData } from '../../../../../hooks/useSocket';
 import { EventTypes } from '../../../../../enums/EventTypes';
+import { Movies } from '../../../../../services/types/Movie';
 
 interface CoordinatorProviderProps {
   session?: Session;
@@ -16,6 +17,9 @@ interface CoordinatorProviderProps {
   socket: WebSocket | null;
   sendMessage: <T>(event: EventTypes, data: T) => void;
   receivedData: SocketData | null;
+  refetch: () => void;
+  movies?: Movies;
+  setMovies: (movies: Movies) => void;
 }
 
 const defaultValue = {
@@ -26,6 +30,9 @@ const defaultValue = {
   socket: null,
   sendMessage: () => {},
   receivedData: null,
+  refetch: () => {},
+  movies: undefined,
+  setMovies: () => {},
 };
 
 const CoordinatorContext = createContext<CoordinatorProviderProps>(defaultValue);
@@ -34,13 +41,19 @@ const CoordinatorProvider: FunctionalComponent = ({ children }) => {
   const { id } = useParams();
   const { user } = useAuth();
 
-  const { isLoading, error, data, isFetching } = useQuery<Session>(['currentSession'], () =>
+  const [movies, setMovies] = React.useState<Movies>();
+
+  const { isLoading, error, data, isFetching, refetch } = useQuery<Session>(['currentSession'], () =>
     api.get(
       `/sessions/${id}`
     ).then((res) => res.data)
   );
 
   const { socket, sendMessage, receivedData } = useSocket({ sessionId: id || '', userId: user.id });
+
+  const handleSetMovies = (currentMovies: Movies) => {
+    setMovies(currentMovies);
+  };
 
   return (
     <CoordinatorContext.Provider
@@ -52,6 +65,9 @@ const CoordinatorProvider: FunctionalComponent = ({ children }) => {
         socket,
         sendMessage,
         receivedData,
+        refetch,
+        movies,
+        setMovies: handleSetMovies,
       }}
     >
       {children}

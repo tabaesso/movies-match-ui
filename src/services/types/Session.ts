@@ -5,5 +5,5 @@ export type Session = {
   name: string;
   isOpen: boolean;
   category: MEDIA_CATEGORIES;
-  genres?: number[];
+  movie_id: number | null;
 }

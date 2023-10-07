@@ -1,46 +1,63 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { MovieVotesProps } from '../../types/modes';
 import { Container, Content } from '../../../../../components/styles';
-import MovieGrid from '../../../../../components/MovieGrid';
-import Button from '../../../../../components/Button';
+import MovieGrid, { Vote } from '../../../../../components/MovieGrid';
 import { Mode } from '../../enum/modes';
-import { movies } from '../../../../../utils/mock/movies';
+import { CoordinatorContext } from '../CoordinatorContext';
+import { EventTypes } from '../../../../../enums/EventTypes';
 
 const MovieVotes = ({ session, onChangeMode }: MovieVotesProps) => {
-  console.log(session?.id);
+  const { sendMessage, receivedData, refetch, movies } = useContext(CoordinatorContext);
 
   const [votedMovie, setMovieVote] = React.useState<number | undefined>(undefined);
+  const [votes, setVotes] = React.useState<Vote[]>([]);
 
-  const votes = React.useMemo(() => [
-    { movieId: 1, votes: 3 },
-    { movieId: 3, votes: 2 },
-    { movieId: undefined, votes: 0 },
-  ], []);
+  React.useEffect(() => {
+    if (!receivedData) return;
 
-  const neitherOfThem = React.useMemo(() => {
-    const vote = votes.find((vote) => vote.movieId === undefined);
+    if (receivedData.event !== EventTypes.VOTED_MOVIE_EVENT) return;
 
-    return vote?.votes && vote?.votes > 0 ? `Votos: ${vote?.votes}` : 'Sem votos';
-  }, [votes]);
+    setVotes(receivedData.data as Vote[]);
+  }, [onChangeMode, receivedData]);
 
-  // TODO: movie selected page will appear just for the session owner, for the others will appear a loading screen
+  React.useEffect(() => {
+    if (!receivedData) return;
+
+    if (receivedData.event !== EventTypes.CHOSEN_MOVIE_EVENT) return;
+
+    refetch();
+    onChangeMode(Mode.STREAM_SELECTION);
+  }, [onChangeMode, receivedData, refetch]);
+
+  // const neitherOfThem = React.useMemo(() => {
+  //   const vote = votes.find((vote) => vote.movieId === undefined);
+
+  //   return vote?.votes && vote?.votes > 0 ? `Votos: ${vote?.votes}` : 'Sem votos';
+  // }, [votes]);
+
+  const handleVoteMovie = React.useCallback((movieId: number) => {
+    if (!session?.id || !movieId) return;
+
+    setMovieVote(movieId);
+    sendMessage(EventTypes.VOTED_MOVIE_EVENT, { sessionId: session?.id, movieId });
+  }, [sendMessage, session?.id]);
 
   return (
     <Container>
       <Content>
         <h3>Selecione qual deseja assistir</h3>
         <MovieGrid
-          movies={movies}
+          movies={movies?.results || []}
           votes={votes}
           votedMovie={votedMovie}
-          onVote={(movieId: number) => setMovieVote(movieId)}
+          onVote={(movieId: number) => handleVoteMovie(movieId)}
         />
-        <Button buttonType='secondary'>
+        {/* <Button buttonType='secondary'>
           Não gostei de nenhum - {neitherOfThem}
-        </Button>
-        <Button buttonType='primary' onClick={() => onChangeMode(Mode.WAITING_APPROVAL)}>
+        </Button> */}
+        {/* <Button buttonType='primary' onClick={() => onChangeMode(Mode.WAITING_APPROVAL)}>
           Escolhido
-        </Button>
+        </Button> */}
       </Content>
     </Container>
   );

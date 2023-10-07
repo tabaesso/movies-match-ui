@@ -14,14 +14,15 @@ import { Genres } from '../../../../../services/types/Genres';
 import _ from 'lodash';
 import { CoordinatorContext } from '../CoordinatorContext';
 import { EventTypes } from '../../../../../enums/EventTypes';
+import { Movies } from '../../../../../services/types/Movie';
 
 const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
   const [selectedGenres, setSelectedGenres] = React.useState<string[]>([]);
   const [waitingForOthers, setWaitingForOthers] = React.useState(false);
 
-  const { sendMessage, receivedData } = useContext(CoordinatorContext);
+  const { sendMessage, receivedData, setMovies } = useContext(CoordinatorContext);
 
-  const { isLoading, error, data, isFetching } = useQuery<Genres>(['genres'], () =>
+  const { isLoading, error, data } = useQuery<Genres>(['genres'], () =>
     api.get(
     `/movies/genres?mediaType=${session?.category}`
     ).then((res) => res.data), { enabled: !!session }
@@ -30,7 +31,7 @@ const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
   React.useEffect(() => {
     if (!error) return;
 
-    toast.error('Erro ao carregar sessão atual');
+    toast.error('Erro ao carregar gêneros do título escolhido');
   }, [error]);
 
   React.useEffect(() => {
@@ -39,8 +40,9 @@ const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
     if (receivedData.event !== EventTypes.SORT_MOVIES_EVENT) return;
 
     setWaitingForOthers(false);
+    setMovies(receivedData.data as Movies);
     onChangeMode(Mode.MOVIE_SELECTION);
-  }, [onChangeMode, receivedData]);
+  }, [onChangeMode, receivedData, setMovies]);
 
   const handleSortMovies = React.useCallback((genres: number[]) => {
     if (!session?.id || !genres.length) return;
@@ -61,10 +63,8 @@ const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
     if (!session) return;
 
     const genres = _.compact(selectedGenres.map((genre) => data?.genres.find((g) => g.name === genre)?.id || undefined));
-    const sessionGenres = session?.genres || [];
-    const mergedGenres = _.uniq([...genres, ...sessionGenres]);
 
-    handleSortMovies(mergedGenres);
+    handleSortMovies(genres);
   }, [data?.genres, handleSortMovies, selectedGenres, session]);
 
   const movieGenres = React.useMemo(() => data?.genres.map((genre) => genre.name) || [], [data]);
@@ -72,7 +72,7 @@ const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
   return (
     <Container>
       <LoadingOverlay
-        isLoading={isLoading || isFetching || waitingForOthers}
+        isLoading={isLoading || waitingForOthers}
         message={waitingForOthers ? 'Aguardando os demais usuários...' : undefined}
       />
       <Link to='/home'>Sair</Link>
