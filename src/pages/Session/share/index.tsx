@@ -10,19 +10,19 @@ import { EventTypes } from '../../../enums/EventTypes';
 const ShareSession = () => {
   const { id } = useParams<{ id: string }>();
 
-  const { session, error, isLoading, isFetching, sendMessage } = useContext(CoordinatorContext);
+  const { session, error, isLoading, sendMessage } = useContext(CoordinatorContext);
 
   const navigate = useNavigate();
 
-  const handleStartSession = () => {
+  const handleStartSession = React.useCallback(() => {
     if (!id) return;
     sendMessage(EventTypes.START_SESSION, { sessionId: id });
-  };
+  }, [id, sendMessage]);
 
-  const handleAccessSession = () => {
+  const handleAccessSession = React.useCallback(() => {
     handleStartSession();
     navigate(`/session/${id}`);
-  };
+  }, [handleStartSession, id, navigate]);
 
   React.useEffect(() => {
     if (!error) return;
@@ -33,14 +33,14 @@ const ShareSession = () => {
   return (
     <Container>
       <Link to='/home'>Voltar</Link>
-      <LoadingOverlay isLoading={isLoading || isFetching} />
+      <LoadingOverlay isLoading={isLoading} />
       <Content>
         <>
           <h2>Sessão: {session?.name}</h2>
           <h3>Compartilhe o link com seus amigos!</h3>
           <input type="text" value={`${import.meta.env.VITE_BASE_URL}/session/${id}`} readOnly />
           <br />
-          <Button buttonType='primary' onClick={handleAccessSession}>Começar!</Button>
+          <Button buttontype='primary' onClick={handleAccessSession}>Começar!</Button>
         </>
       </Content>
     </Container>

@@ -11,7 +11,7 @@ const ForgotPassword = () => {
       <Content>
         <h3>Recuperação de senha</h3>
         <span>Em breve...</span>
-        <Button buttonType='primary' onClick={() => navigate('/')}>Voltar</Button>
+        <Button buttontype='primary' onClick={() => navigate('/')}>Voltar</Button>
       </Content>
     </Container>
   );

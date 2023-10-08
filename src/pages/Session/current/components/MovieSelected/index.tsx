@@ -26,10 +26,10 @@ const MovieSelected = ({ session, onChangeMode }: MovieSelectedProps) => {
         </MovieImageContainer>
         
         <JustifyRow>
-          <Button buttonType='secondary' onClick={handleVoteAgain}>
+          <Button buttontype='secondary' onClick={handleVoteAgain}>
             Votar novamente
           </Button>
-          <Button buttonType='primary' onClick={() => onChangeMode(Mode.STREAM_SELECTION)}>
+          <Button buttontype='primary' onClick={() => onChangeMode(Mode.STREAM_SELECTION)}>
             É esse mesmo!
           </Button>
         </JustifyRow>

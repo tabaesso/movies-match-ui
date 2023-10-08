@@ -49,7 +49,7 @@ const SignInForm: FormFC<SignInValues> = (props) => {
             error={errors.password}
           />
           <Button
-            buttonType='primary'
+            buttontype='primary'
             type="submit"
           >
             Entrar

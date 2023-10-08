@@ -17,6 +17,8 @@ export const Content = styled.div`
   background-color: #f0f0f0;
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 600px;
+  overflow-y: auto;
 `;
 
 export const JustifyRow = styled.div`

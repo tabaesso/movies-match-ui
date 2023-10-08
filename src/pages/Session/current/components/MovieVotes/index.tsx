@@ -52,10 +52,10 @@ const MovieVotes = ({ session, onChangeMode }: MovieVotesProps) => {
           votedMovie={votedMovie}
           onVote={(movieId: number) => handleVoteMovie(movieId)}
         />
-        {/* <Button buttonType='secondary'>
+        {/* <Button buttontype='secondary'>
           Não gostei de nenhum - {neitherOfThem}
         </Button> */}
-        {/* <Button buttonType='primary' onClick={() => onChangeMode(Mode.WAITING_APPROVAL)}>
+        {/* <Button buttontype='primary' onClick={() => onChangeMode(Mode.WAITING_APPROVAL)}>
           Escolhido
         </Button> */}
       </Content>

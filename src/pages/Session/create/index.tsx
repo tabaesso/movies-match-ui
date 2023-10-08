@@ -6,12 +6,18 @@ import { useMutation } from '@tanstack/react-query';
 import api from '../../../services/api';
 import { toast } from 'react-toastify';
 import LoadingOverlay from '../../../components/LoadingOverlay';
+import useAuth from '../../../hooks/useAuth';
+
+interface CreateSessionDTO extends CreateSessionValues {
+  owner: string;
+}
 
 const CreateSession = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const mutation = useMutation({
-    mutationFn: (newSession: CreateSessionValues) => {
+    mutationFn: (newSession: CreateSessionDTO) => {
       return api.post('/sessions', newSession);
     },
     onSuccess: (data) => {
@@ -21,8 +27,8 @@ const CreateSession = () => {
   });
 
   const handleSubmit = React.useCallback((values: CreateSessionValues) => {
-    mutation.mutate(values);
-  }, [mutation]);
+    mutation.mutate({ ...values, owner: user.id });
+  }, [mutation, user.id]);
 
   return (
     <Container>

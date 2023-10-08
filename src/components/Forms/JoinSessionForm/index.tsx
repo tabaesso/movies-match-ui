@@ -38,7 +38,7 @@ const JoinSessionForm: FormFC<JoinSessionValues> = (props) => {
             placeholder='Link da sessão'
             error={errors.url}
           />
-          <Button buttonType='primary' type='submit'>Acessar</Button>
+          <Button buttontype='primary' type='submit'>Acessar</Button>
         </FormikForm>
       )}
     </Formik>

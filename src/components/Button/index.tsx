@@ -2,7 +2,7 @@ import React, { ButtonHTMLAttributes } from 'react';
 import { Container } from './styles';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  buttonType: 'primary' | 'secondary';
+  buttontype: 'primary' | 'secondary';
   selected?: boolean;
 }
 
@@ -10,7 +10,7 @@ const Button = (props: ButtonProps) => {
   const {
     children,
     type,
-    buttonType,
+    buttontype,
     selected,
     onClick,
   } = props;
@@ -18,7 +18,7 @@ const Button = (props: ButtonProps) => {
   return (
     <Container
       type={type}
-      buttonType={buttonType}
+      buttontype={buttontype}
       selected={selected}
       onClick={onClick}>
       {children}

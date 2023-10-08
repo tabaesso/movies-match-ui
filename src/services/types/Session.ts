@@ -6,4 +6,6 @@ export type Session = {
   isOpen: boolean;
   category: MEDIA_CATEGORIES;
   movie_id: number | null;
+  started: boolean | null;
+  owner: string | null;
 }

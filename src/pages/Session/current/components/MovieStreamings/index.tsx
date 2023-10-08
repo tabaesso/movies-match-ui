@@ -66,7 +66,7 @@ const MovieStreamings = ({ session }: MovieStreamingsProps) => {
             {streamingServices.map((service) => <li>{service}</li>)}
           </ul>
         )}
-        <Button buttonType='primary' onClick={() => navigate('/home')}>Voltar para a página inicial</Button>
+        <Button buttontype='primary' onClick={() => navigate('/home')}>Voltar para a página inicial</Button>
       </Content>
     </Container>
   );

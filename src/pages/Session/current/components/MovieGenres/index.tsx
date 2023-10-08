@@ -19,6 +19,7 @@ import { Movies } from '../../../../../services/types/Movie';
 const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
   const [selectedGenres, setSelectedGenres] = React.useState<string[]>([]);
   const [waitingForOthers, setWaitingForOthers] = React.useState(false);
+  const [waitingForStart, setWaitingForStart] = React.useState(false);
 
   const { sendMessage, receivedData, setMovies } = useContext(CoordinatorContext);
 
@@ -29,10 +30,26 @@ const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
   );
 
   React.useEffect(() => {
+    if (!session) return;
+
+    if (!session.started) {
+      setWaitingForStart(true);
+    }
+  }, [session]);
+
+  React.useEffect(() => {
     if (!error) return;
 
     toast.error('Erro ao carregar gêneros do título escolhido');
   }, [error]);
+
+  React.useEffect(() => {
+    if (!receivedData) return;
+
+    if (receivedData.event !== EventTypes.START_SESSION) return;
+
+    setWaitingForStart(false);
+  }, [receivedData]);
 
   React.useEffect(() => {
     if (!receivedData) return;
@@ -69,13 +86,21 @@ const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
 
   const movieGenres = React.useMemo(() => data?.genres.map((genre) => genre.name) || [], [data]);
 
+  const loadingMessage = React.useMemo(() => {
+    if (waitingForOthers) return 'Aguardando os demais usuários...';
+
+    if (waitingForStart) return 'Aguardando o administrador iniciar a sessão...';
+
+    return undefined;
+  }, [waitingForOthers, waitingForStart]);
+
   return (
     <Container>
       <LoadingOverlay
-        isLoading={isLoading || waitingForOthers}
-        message={waitingForOthers ? 'Aguardando os demais usuários...' : undefined}
+        isLoading={isLoading || waitingForOthers || waitingForStart}
+        message={loadingMessage}
       />
-      <Link to='/home'>Sair</Link>
+      <Link to='/home'>Sair dessa sessão</Link>
       <Content>
         <h3>Selecione o gênero do que deseja assistir</h3>
         <CheckboxContainer>
@@ -85,7 +110,7 @@ const MovieGenres = ({ session, onChangeMode }: MovieGenresProps) => {
             onSelectToggle={handleGenreToggle}
           />
         </CheckboxContainer>
-        <Button buttonType='primary' onClick={onSubmit}>Combinar filmes</Button>
+        <Button buttontype='primary' onClick={onSubmit}>Combinar títulos</Button>
       </Content>
     </Container>
   );

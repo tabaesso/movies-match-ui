@@ -19,9 +19,9 @@ const Home: React.FC = () => {
     <S.PageContainer>
       <h2 style={{ color: '#FFF' }}>O que vamos assistir hoje, {user.name}?</h2>
       <S.ButtonContainer>
-        <Button buttonType='primary' onClick={() => navigate('/create-session')}>Criar sessão</Button>
-        <Button buttonType='primary' onClick={() => navigate('/join-session')}>Entrar em uma sessão</Button>
-        <Button buttonType='primary' onClick={() => navigate('/rate')}>Avaliar filmes assistidos</Button>
+        <Button buttontype='primary' onClick={() => navigate('/create-session')}>Criar sessão</Button>
+        <Button buttontype='primary' onClick={() => navigate('/join-session')}>Entrar em uma sessão</Button>
+        <Button buttontype='primary' onClick={() => navigate('/rate')}>Avaliar filmes assistidos</Button>
       </S.ButtonContainer>
       <S.ContentWrapper>
         <S.RankingContainer>
@@ -46,7 +46,7 @@ const Home: React.FC = () => {
         </S.RankingContainer>
       </S.ContentWrapper>
       <div>
-        <Button buttonType='secondary' onClick={handleLogout}>Sair</Button>
+        <Button buttontype='secondary' onClick={handleLogout}>Sair</Button>
       </div>
     </S.PageContainer>
   );

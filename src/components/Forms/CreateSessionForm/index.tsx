@@ -59,7 +59,7 @@ const CreateSessionForm: FormFC<CreateSessionValues> = (props) => {
             placeholder='Nome'
             error={errors.name}
           />
-          <Button buttonType='primary' type="submit">Criar sessão</Button>
+          <Button buttontype='primary' type="submit">Criar sessão</Button>
         </FormikForm>
       )}
     </Formik>

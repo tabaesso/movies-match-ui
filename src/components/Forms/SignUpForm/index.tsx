@@ -62,8 +62,8 @@ const SignUpForm: FormFC<SignUpValues> = (props) => {
             error={errors.password}
           />
           <JustifyRow>
-            <Button buttonType='secondary' type="button" onClick={() => navigate('/')}>Voltar</Button>
-            <Button buttonType='primary' type="submit">Criar</Button>
+            <Button buttontype='secondary' type="button" onClick={() => navigate('/')}>Voltar</Button>
+            <Button buttontype='primary' type="submit">Criar</Button>
           </JustifyRow>
         </FormikForm>
       )}
