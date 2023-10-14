@@ -21,9 +21,9 @@ const Home: React.FC = () => {
       <S.ButtonContainer>
         <Button buttontype='primary' onClick={() => navigate('/create-session')}>Criar sessão</Button>
         <Button buttontype='primary' onClick={() => navigate('/join-session')}>Entrar em uma sessão</Button>
-        <Button buttontype='primary' onClick={() => navigate('/rate')}>Avaliar filmes assistidos</Button>
+        {/* <Button buttontype='primary' onClick={() => navigate('/rate')}>Avaliar filmes assistidos</Button> */}
       </S.ButtonContainer>
-      <S.ContentWrapper>
+      {/* <S.ContentWrapper>
         <S.RankingContainer>
           <S.RankingTitle>Ranking de filmes</S.RankingTitle>
           <ul>
@@ -44,7 +44,7 @@ const Home: React.FC = () => {
             <li>5º - Filme 5 | Nota 5/10</li>
           </ul>
         </S.RankingContainer>
-      </S.ContentWrapper>
+      </S.ContentWrapper> */}
       <div>
         <Button buttontype='secondary' onClick={handleLogout}>Sair</Button>
       </div>
