@@ -5,7 +5,7 @@ import JoinSessionForm, { JoinSessionValues } from '../../../components/Forms/Jo
 
 const JoinSession = () => {
   const handleSubmit = React.useCallback((values: JoinSessionValues) => {
-    window.location.href = values.url;
+    window.location.replace(values.url);
   }, []);
 
   return (
