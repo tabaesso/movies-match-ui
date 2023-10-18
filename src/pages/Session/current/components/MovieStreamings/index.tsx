@@ -26,8 +26,6 @@ const MovieStreamings = ({ session }: MovieStreamingsProps) => {
     ).then((res) => res.data), { enabled: !!session?.movie_id }
   );
 
-  console.log(streamingsData);
-
   React.useEffect(() => {
     if (!movieError) return;
 

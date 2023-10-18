@@ -7,8 +7,7 @@ import Image from '../../../../../components/Image';
 import { MovieImageContainer } from './styles';
 import { movies } from '../../../../../utils/mock/movies';
 
-const MovieSelected = ({ session, onChangeMode }: MovieSelectedProps) => {
-  console.log(session?.id);
+const MovieSelected = ({ onChangeMode }: MovieSelectedProps) => {
   const handleVoteAgain = React.useCallback(() => {
     // todo: update session to allow voting again
     onChangeMode(Mode.MOVIE_GENRE_SELECTION);

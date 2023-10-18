@@ -3,8 +3,7 @@ import { WaitingApprovalProps } from '../../types/modes';
 import LoadingOverlay from '../../../../../components/LoadingOverlay';
 import { Mode } from '../../enum/modes';
 
-const WaitingApproval = ({ session, onChangeMode }: WaitingApprovalProps) => {
-  console.log(session?.id);
+const WaitingApproval = ({ onChangeMode }: WaitingApprovalProps) => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   // just a simulation for loading time
