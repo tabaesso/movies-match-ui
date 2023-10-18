@@ -6,6 +6,7 @@ export const PageContainer = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  text-align: center;
 `;
 
 export const ContentWrapper = styled.div`
