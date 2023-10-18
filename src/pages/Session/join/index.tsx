@@ -1,12 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Container, Content } from '../../../components/styles';
 import JoinSessionForm, { JoinSessionValues } from '../../../components/Forms/JoinSessionForm';
 
 const JoinSession = () => {
+  const navigate = useNavigate();
+
   const handleSubmit = React.useCallback((values: JoinSessionValues) => {
-    window.location.replace(values.url);
-  }, []);
+    const [,sessionId] = values.url.split('session/');
+
+    navigate(`/session/${sessionId}`);
+  }, [navigate]);
 
   return (
     <Container>
