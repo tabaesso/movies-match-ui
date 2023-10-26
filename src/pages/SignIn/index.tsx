@@ -6,7 +6,7 @@ import SignInForm, { SignInValues } from '../../components/Forms/SignInForm';
 import { toast } from 'react-toastify';
 
 const SignIn = () => {
-  const { signIn } = useAuth();
+  const { signIn, signOut } = useAuth();
 
   const navigate = useNavigate();
 
@@ -15,6 +15,10 @@ const SignIn = () => {
     toast.success('Login realizado com sucesso');
     navigate('/home');
   }, [navigate, signIn]);
+
+  React.useEffect(() => {
+    signOut();
+  }, [signOut]);
 
   return (
     <Container>
